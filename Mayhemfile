@@ -1,6 +1,5 @@
 project: rnshah9/tcpdump
 target: tcpdump
-image: ghcr.io/rnshah9/playground:tcpdump
 tests:
   - file://test
 
