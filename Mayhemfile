@@ -4,5 +4,5 @@ testsuite:
   - file://test
 
 cmds:
-  - cmd: /repo/tcpdump -r @@
+  - cmd: /install/bin/tcpdump -r @@
 # 
