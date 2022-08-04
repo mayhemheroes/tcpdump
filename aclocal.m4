@@ -243,7 +243,7 @@ AC_DEFUN(AC_LBL_CHECK_COMPILER_OPT,
 	#    https://www.postgresql.org/message-id/2192993.1591682589%40sss.pgh.pa.us
 	#    https://www.postgresql.org/message-id/2192993.1591682589%40sss.pgh.pa.us
 	#
-	# This may, as per those two messages, be fixed in autoonf 2.70,
+	# This may, as per those two messages, be fixed in autoconf 2.70,
 	# but we only require 2.64 or newer for now.
 	#
 	AC_COMPILE_IFELSE(
@@ -821,7 +821,7 @@ AC_DEFUN(AC_LBL_LIBPCAP,
     AC_CHECK_FUNC(pcap_loop,,
     [
         AC_MSG_ERROR(
-[This is a bug, please follow the guidelines in CONTRIBUTING and include the
+[This is a bug, please follow the guidelines in CONTRIBUTING.md and include the
 config.log file in your report.  If you have downloaded libpcap from
 tcpdump.org, and built it yourself, please also include the config.log
 file from the libpcap source directory, the Makefile from the libpcap

@@ -32,6 +32,7 @@
 #include <setjmp.h>
 #include "status-exit-codes.h"
 #include "funcattrs.h" /* for PRINTFLIKE_FUNCPTR() */
+#include "diag-control.h" /* for ND_UNREACHABLE */
 
 /*
  * Data types corresponding to multi-byte integral values within data
@@ -176,7 +177,7 @@ typedef void (*if_printer) IF_PRINTER_ARGS;
  * buffer, we free the current buffer and pop the previous one off the
  * stack.
  *
- * A buffer has a beginnning and end pointer, and a link to the previous
+ * A buffer has a beginning and end pointer, and a link to the previous
  * buffer on the stack.
  *
  * In other cases, we temporarily adjust the snapshot end to reflect a
@@ -458,7 +459,7 @@ extern void txtproto_print(netdissect_options *, const u_char *, u_int,
     (defined(__s390__) || defined(__s390x__) || defined(__zarch__)) || \
     defined(__vax__)
 /*
- * The procesor natively handles unaligned loads, so just use memcpy()
+ * The processor natively handles unaligned loads, so just use memcpy()
  * and memcmp(), to enable those optimizations.
  *
  * XXX - are those all the x86 tests we need?

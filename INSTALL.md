@@ -44,7 +44,7 @@ Please see [this file](README.md) for notes about tested platforms.
 ## Description of files
 ```
 CHANGES		- description of differences between releases
-CONTRIBUTING	- guidelines for contributing
+CONTRIBUTING.md	- guidelines for contributing
 CREDITS		- people that have helped tcpdump along
 INSTALL.md	- this file
 LICENSE		- the license under which tcpdump is distributed
@@ -73,6 +73,7 @@ config.h.in	- autoconf input
 config.sub	- autoconf support
 configure	- configure script (run this first)
 configure.ac	- configure script source
+doc/README.*	- some building documentation
 ethertype.h	- Ethernet type value definitions
 extract.h	- alignment definitions
 gmpls.c		- GMPLS definitions
@@ -123,5 +124,4 @@ tcpdump.c	- main program
 timeval-operations.h - timeval operations macros
 udp.h		- UDP definitions
 util-print.c	- utility routines for protocol printers
-win32		- headers and routines for building on Win32 systems
 ```

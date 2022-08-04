@@ -4,7 +4,7 @@
 
 To report bugs and other problems, contribute patches, request a
 feature, provide generic feedback etc please see the
-[guidelines for contributing](CONTRIBUTING) in the tcpdump source tree root.
+[guidelines for contributing](CONTRIBUTING.md) in the tcpdump source tree root.
 
 Anonymous Git is available via
 
@@ -30,11 +30,11 @@ tcpdump compiles and works on at least the following platforms:
 * FreeBSD
 * Haiku
 * HP-UX 11i
+* illumos (OmniOS, OpenIndiana)
 * GNU/Linux
 * {Mac} OS X / macOS
 * NetBSD
 * OpenBSD
-* OpenIndiana
 * OpenWrt
 * Solaris
 * Windows (requires WinPcap or Npcap, and Visual Studio with CMake)

@@ -20,7 +20,7 @@
 .\" WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
 .\" MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 .\"
-.TH TCPDUMP 1  "17 January 2022"
+.TH TCPDUMP 1  "30 July 2022"
 .SH NAME
 tcpdump \- dump traffic on a network
 .SH SYNOPSIS
@@ -395,10 +395,11 @@ Sun's NIS server \(em usually it hangs forever translating non-local
 internet numbers).
 .IP
 The test for `foreign' IPv4 addresses is done using the IPv4 address and
-netmask of the interface on which capture is being done.  If that
-address or netmask are not available, available, either because the
-interface on which capture is being done has no address or netmask or
-because the capture is being done on the Linux "any" interface, which
+netmask of the interface on that capture is being done.  If that
+address or netmask are not available, either because the
+interface on that capture is being done has no address or netmask or
+because it is the "any" pseudo-interface, which is
+available in Linux and in recent versions of macOS and Solaris, and which
 can capture on more than one interface, this option will not work
 correctly.
 .TP
@@ -451,10 +452,11 @@ flag is not given, \fItcpdump\fP searches the system
 interface list for the lowest numbered, configured up interface
 (excluding loopback), which may turn out to be, for example, ``eth0''.
 .IP
-On Linux systems with 2.2 or later kernels, an
+On Linux systems with 2.2 or later kernels and on recent versions of macOS
+and Solaris, an
 .I interface
 argument of ``any'' can be used to capture packets from all interfaces.
-Note that captures on the ``any'' device will not be done in promiscuous
+Note that captures on the ``any'' pseudo-interface will not be done in promiscuous
 mode.
 .IP
 If the
@@ -666,7 +668,7 @@ Print every \fInth\fP packet. This option enables the \fB--print\fP flag.
 .IP
 Unprinted packets are not parsed, which decreases processing time. Setting
 \fInth\fP to \fB100\fP for example, will (counting from 1) parse and print the
-100th packet, 200th patcket, 300th packet, and so on.
+100th packet, 200th packet, 300th packet, and so on.
 .IP
 This option also enables the \fB-S\fP flag, as relative TCP sequence
 numbers are not tracked for unprinted packets.
@@ -2050,7 +2052,7 @@ To report a security issue please send an e-mail to \%security@tcpdump.org.
 .LP
 To report bugs and other problems, contribute patches, request a
 feature, provide generic feedback etc. please see the file
-.I CONTRIBUTING
+.I CONTRIBUTING.md
 in the tcpdump source tree root.
 .LP
 NIT doesn't let you watch your own outbound traffic, BPF will.

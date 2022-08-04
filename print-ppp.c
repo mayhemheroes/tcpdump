@@ -1428,10 +1428,16 @@ ppp_hdlc(netdissect_options *ndo,
             if (length < 4)
                 goto trunc;
             proto = GET_BE_U_2(b + 2); /* load the PPP proto-id */
-            handle_ppp(ndo, proto, b + 4, length - 4);
+            if ((proto & 0xff00) == 0x7e00)
+                ND_PRINT("(protocol 0x%04x invalid)", proto);
+            else
+                handle_ppp(ndo, proto, b + 4, length - 4);
             break;
         default: /* last guess - proto must be a PPP proto-id */
-            handle_ppp(ndo, proto, b + 2, length - 2);
+            if ((proto & 0xff00) == 0x7e00)
+                ND_PRINT("(protocol 0x%04x invalid)", proto);
+            else
+                handle_ppp(ndo, proto, b + 2, length - 2);
             break;
         }
 
@@ -1564,11 +1570,18 @@ ppp_print(netdissect_options *ndo,
 		hdr_len += 2;
 	}
 
-	if (ndo->ndo_eflag)
-		ND_PRINT("%s (0x%04x), length %u: ",
-		          tok2str(ppptype2str, "unknown", proto),
+	if (ndo->ndo_eflag) {
+		const char *typestr;
+		typestr = tok2str(ppptype2str, "unknown", proto);
+		ND_PRINT("%s (0x%04x), length %u",
+		          typestr,
 		          proto,
 		          olen);
+		if (*typestr == 'u')	/* "unknown" */
+			return hdr_len;
+
+		ND_PRINT(": ");
+	}
 
 	handle_ppp(ndo, proto, p, length);
 	return (hdr_len);
