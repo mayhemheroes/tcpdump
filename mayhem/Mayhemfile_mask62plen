@@ -1,0 +1,6 @@
+project: tcpdump
+target: tcpdump
+
+cmds:
+  - cmd: /fuzz_mask62plen
+    libfuzzer: true
