@@ -1,0 +1,7 @@
+project: tcpdump
+target: tcpdump
+testsuite:
+  - file://test
+
+cmds:
+  - cmd: /install/bin/tcpdump -r @@
