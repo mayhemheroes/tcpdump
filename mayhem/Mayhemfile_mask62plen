@@ -1,5 +1,5 @@
 project: tcpdump
-target: tcpdump
+target: mask62plen
 
 cmds:
   - cmd: /fuzz_mask62plen
