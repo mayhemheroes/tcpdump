@@ -119,6 +119,44 @@ and ask!
 ## Code style and generic remarks
 *  A thorough reading of some other printers code is useful.
 
+* To help learn how tcpdump works or to help debugging:
+  You can configure and build tcpdump with the instrumentation of functions:
+  ```
+  $ ./configure --enable-instrument-functions
+  $ make -s clean all
+  ```
+
+  This generates instrumentation calls for entry and exit to functions.
+  Just after function entry and just before function exit, these
+  profiling functions are called and print the function names with
+  indentation and call level.
+
+  If entering in a function, it prints also the calling function name with
+  file name and line number. There may be a small shift in the line number.
+
+  In some cases, with Clang 11, the file number is unknown (printed '??')
+  or the line number is unknown (printed '?'). In this case, use GCC.
+
+  If the environment variable INSTRUMENT is
+  - unset or set to an empty string, print nothing, like with no
+    instrumentation
+  - set to "all" or "a", print all the functions names
+  - set to "global" or "g", print only the global functions names
+
+  This allows to run:
+  ```
+  $ INSTRUMENT=a ./tcpdump ...
+  $ INSTRUMENT=g ./tcpdump ...
+  $ INSTRUMENT= ./tcpdump ...
+  ```
+  or
+  ```
+  $ export INSTRUMENT=global
+  $ ./tcpdump ...
+  ```
+
+  The library libbfd is used, therefore the binutils-dev package is required.
+
 *  Put the normative reference if any as comments (RFC, etc.).
 
 *  Put the format of packets/headers/options as comments if there is no
@@ -170,6 +208,9 @@ and ask!
 *  A commit message must have:
    ```
    First line: Capitalized short summary in the imperative (50 chars or less)
+
+   If the commit concerns a protocol, the summary line must start with
+   "protocol: ".
 
    Body: Detailed explanatory text, if necessary. Fold it to approximately
    72 characters. There must be an empty line separating the summary from

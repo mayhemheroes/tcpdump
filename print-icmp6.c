@@ -41,7 +41,7 @@
 #include "udp.h"
 #include "ah.h"
 
-/*	NetBSD: icmp6.h,v 1.13 2000/08/03 16:30:37 itojun Exp 	*/
+/*	NetBSD: icmp6.h,v 1.13 2000/08/03 16:30:37 itojun Exp	*/
 /*	$KAME: icmp6.h,v 1.22 2000/08/03 15:25:16 jinmei Exp $	*/
 
 /*
@@ -103,7 +103,7 @@ struct icmp6_hdr {
 #define ICMP6_ECHO_REQUEST		128	/* echo service */
 #define ICMP6_ECHO_REPLY		129	/* echo reply */
 #define ICMP6_MEMBERSHIP_QUERY		130	/* group membership query */
-#define MLD6_LISTENER_QUERY		130 	/* multicast listener query */
+#define MLD6_LISTENER_QUERY		130	/* multicast listener query */
 #define ICMP6_MEMBERSHIP_REPORT		131	/* group membership report */
 #define MLD6_LISTENER_REPORT		131	/* multicast listener report */
 #define ICMP6_MEMBERSHIP_REDUCTION	132	/* group membership termination */
@@ -145,10 +145,10 @@ struct icmp6_hdr {
 #define ICMP6_DST_UNREACH_ADDR		3	/* address unreachable */
 #define ICMP6_DST_UNREACH_NOPORT	4	/* port unreachable */
 
-#define ICMP6_TIME_EXCEED_TRANSIT 	0	/* ttl==0 in transit */
+#define ICMP6_TIME_EXCEED_TRANSIT	0	/* ttl==0 in transit */
 #define ICMP6_TIME_EXCEED_REASSEMBLY	1	/* ttl==0 in reass */
 
-#define ICMP6_PARAMPROB_HEADER 		0	/* erroneous header field */
+#define ICMP6_PARAMPROB_HEADER		0	/* erroneous header field */
 #define ICMP6_PARAMPROB_NEXTHEADER	1	/* unrecognized next header */
 #define ICMP6_PARAMPROB_OPTION		2	/* unrecognized option */
 #define ICMP6_PARAMPROB_FRAGHDRCHAIN	3	/* incomplete header chain */
@@ -193,7 +193,7 @@ struct mld6_hdr {
  */
 
 struct nd_router_solicit {	/* router solicitation */
-	struct icmp6_hdr 	nd_rs_hdr;
+	struct icmp6_hdr	nd_rs_hdr;
 	/* could be followed by options */
 };
 
@@ -394,18 +394,13 @@ struct icmp6_nodeinfo {
 #define NI_QTYPE_NODEADDR	3 /* Node Addresses */
 #define NI_QTYPE_IPV4ADDR	4 /* IPv4 Addresses */
 
-/* network endian */
-#define NI_SUPTYPE_FLAG_COMPRESS	((uint16_t)htons(0x1))
-#define NI_FQDN_FLAG_VALIDTTL		((uint16_t)htons(0x1))
-
-/* network endian */
-#define NI_NODEADDR_FLAG_TRUNCATE	((uint16_t)htons(0x1))
-#define NI_NODEADDR_FLAG_ALL		((uint16_t)htons(0x2))
-#define NI_NODEADDR_FLAG_COMPAT		((uint16_t)htons(0x4))
-#define NI_NODEADDR_FLAG_LINKLOCAL	((uint16_t)htons(0x8))
-#define NI_NODEADDR_FLAG_SITELOCAL	((uint16_t)htons(0x10))
-#define NI_NODEADDR_FLAG_GLOBAL		((uint16_t)htons(0x20))
-#define NI_NODEADDR_FLAG_ANYCAST	((uint16_t)htons(0x40)) /* just experimental. not in spec */
+#define NI_NODEADDR_FLAG_TRUNCATE	0x0001
+#define NI_NODEADDR_FLAG_ALL		0x0002
+#define NI_NODEADDR_FLAG_COMPAT		0x0004
+#define NI_NODEADDR_FLAG_LINKLOCAL	0x0008
+#define NI_NODEADDR_FLAG_SITELOCAL	0x0010
+#define NI_NODEADDR_FLAG_GLOBAL		0x0020
+#define NI_NODEADDR_FLAG_ANYCAST	0x0040 /* just experimental. not in spec */
 
 struct ni_reply_fqdn {
 	nd_uint32_t ni_fqdn_ttl;	/* TTL */
@@ -432,7 +427,7 @@ struct icmp6_router_renum {	/* router renumbering header */
 #define rr_type		rr_hdr.icmp6_type
 #define rr_code		rr_hdr.icmp6_code
 #define rr_cksum	rr_hdr.icmp6_cksum
-#define rr_seqnum 	rr_hdr.icmp6_data32[0]
+#define rr_seqnum	rr_hdr.icmp6_data32[0]
 
 struct rr_pco_match {		/* match prefix part */
 	nd_uint8_t		rpm_code;
@@ -816,15 +811,15 @@ rpl_printopts(netdissect_options *ndo, const uint8_t *opts, u_int length)
                         optlen = 1;
                         ND_PRINT(" opt:pad1");
                 } else {
-                	if (length < RPL_GENOPTION_LEN)
-                		goto trunc;
+			if (length < RPL_GENOPTION_LEN)
+				goto trunc;
 	                optlen = GET_U_1(opt->rpl_dio_len)+RPL_GENOPTION_LEN;
                         ND_PRINT(" opt:%s len:%u ",
                                   tok2str(rpl_subopt_values, "subopt:%u", dio_type),
                                   optlen);
                         ND_TCHECK_LEN(opt, optlen);
                         if (length < optlen)
-                        	goto trunc;
+				goto trunc;
                         if (ndo->ndo_vflag > 2) {
                                 hex_print(ndo,
                                           " ",
@@ -1946,16 +1941,16 @@ icmp6_rrenum_print(netdissect_options *ndo, const u_char *bp, const u_char *ep)
 	ND_TCHECK_4(rr6->rr_reserved);
 	switch (GET_U_1(rr6->rr_code)) {
 	case ICMP6_ROUTER_RENUMBERING_COMMAND:
-		ND_PRINT("router renum: command");
+		ND_PRINT(", command");
 		break;
 	case ICMP6_ROUTER_RENUMBERING_RESULT:
-		ND_PRINT("router renum: result");
+		ND_PRINT(", result");
 		break;
 	case ICMP6_ROUTER_RENUMBERING_SEQNUM_RESET:
-		ND_PRINT("router renum: sequence number reset");
+		ND_PRINT(", sequence number reset");
 		break;
 	default:
-		ND_PRINT("router renum: code-#%u", GET_U_1(rr6->rr_code));
+		ND_PRINT(", code-#%u", GET_U_1(rr6->rr_code));
 		break;
 	}
 

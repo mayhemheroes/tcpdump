@@ -238,7 +238,7 @@ do_decrypt(netdissect_options *ndo, const char *caller, struct sa_list *sa,
 	 * we can't decrypt on top of the input buffer.
 	 */
 	ptlen = ctlen;
-	pt = (u_char *)malloc(ptlen);
+	pt = (u_char *)calloc(1, ptlen);
 	if (pt == NULL) {
 		EVP_CIPHER_CTX_free(ctx);
 		(*ndo->ndo_error)(ndo, S_ERR_ND_MEM_ALLOC,
@@ -762,7 +762,7 @@ esp_print(netdissect_options *ndo,
 	ND_PRINT(", length %u", length);
 
 #ifdef HAVE_LIBCRYPTO
-	/* initiailize SAs */
+	/* initialize SAs */
 	if (ndo->ndo_sa_list_head == NULL) {
 		if (!ndo->ndo_espsecret)
 			return;

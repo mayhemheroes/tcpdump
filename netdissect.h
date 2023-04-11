@@ -30,6 +30,7 @@
 #endif
 #include <sys/types.h>
 #include <setjmp.h>
+#include <time.h>
 #include "status-exit-codes.h"
 #include "funcattrs.h" /* for PRINTFLIKE_FUNCPTR() */
 #include "diag-control.h" /* for ND_UNREACHABLE */
@@ -127,10 +128,6 @@ extern size_t strlcat (char *, const char *, size_t);
 #endif
 #ifndef HAVE_STRLCPY
 extern size_t strlcpy (char *, const char *, size_t);
-#endif
-
-#ifndef HAVE_STRDUP
-extern char *strdup (const char *str);
 #endif
 
 #ifndef HAVE_STRSEP
@@ -437,6 +434,9 @@ extern void ts_print(netdissect_options *, const struct timeval *);
 extern void signed_relts_print(netdissect_options *, int32_t);
 extern void unsigned_relts_print(netdissect_options *, uint32_t);
 
+extern const char *nd_format_time(char *buf, size_t bufsize,
+    const char *format, const struct tm *timeptr);
+
 extern void fn_print_char(netdissect_options *, u_char);
 extern void fn_print_str(netdissect_options *, const u_char *);
 extern u_int nd_printztn(netdissect_options *, const u_char *, u_int, const u_char *);
@@ -617,7 +617,7 @@ extern void calm_fast_print(netdissect_options *, const u_char *, u_int, const s
 extern void carp_print(netdissect_options *, const u_char *, u_int, u_int);
 extern void cdp_print(netdissect_options *, const u_char *, u_int);
 extern void cfm_print(netdissect_options *, const u_char *, u_int);
-extern u_int chdlc_print(netdissect_options *, const u_char *, u_int);
+extern void chdlc_print(netdissect_options *, const u_char *, u_int);
 extern void cisco_autorp_print(netdissect_options *, const u_char *, u_int);
 extern void cnfp_print(netdissect_options *, const u_char *);
 extern void dccp_print(netdissect_options *, const u_char *, const u_char *, u_int);
@@ -697,6 +697,7 @@ extern void netbeui_print(netdissect_options *, u_short, const u_char *, u_int);
 extern void nfsreply_noaddr_print(netdissect_options *, const u_char *, u_int, const u_char *);
 extern void nfsreply_print(netdissect_options *, const u_char *, u_int, const u_char *);
 extern void nfsreq_noaddr_print(netdissect_options *, const u_char *, u_int, const u_char *);
+extern void nhrp_print(netdissect_options *, const u_char *, u_int);
 extern void nsh_print(netdissect_options *, const u_char *, u_int);
 extern void ntp_print(netdissect_options *, const u_char *, u_int);
 extern void oam_print(netdissect_options *, const u_char *, u_int, u_int);
@@ -764,7 +765,6 @@ extern void zmtp1_datagram_print(netdissect_options *, const u_char *, const u_i
 extern void zmtp1_print(netdissect_options *, const u_char *, u_int);
 
 /* checksum routines */
-extern void init_checksum(void);
 extern uint16_t verify_crc10_cksum(uint16_t, const u_char *, int);
 extern uint16_t create_osi_cksum(const uint8_t *, int, int);
 
